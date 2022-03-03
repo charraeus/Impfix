@@ -1,0 +1,6 @@
+.DS_Store
+doxygen
+*.pdf
+__pycache__
+ofmx_*.zip
+testdata

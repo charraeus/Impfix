@@ -18,7 +18,7 @@ class SettingsClass:
     * Command line parameters
     """
     ## Impfix version as string - has to be set manually by developer
-    impfix_version = '0.1.0'
+    impfix_version = '0.1.1'
     ## Impfix hello message part 1
     __cls_impfix_hello_1: str = 'Impfix '
     ## Impfix hello message part 2
@@ -84,16 +84,14 @@ class SettingsClass:
         # e.g.   xplane_path = 'c:/x-plane 11'
         #        xplane_user_fix_dat_filename = 'Custom Data/user_fix.dat'
         #           ==> return 'c:/xplane 11/Custom Data/user_fix.dat'
-#        self.xplane_user_fix_dat_filename = \
-#            self.__create_path_and_filename(self.__xplane_path, 
-#                                            self.__xplane_user_fix_dat_subdirectory)
         self.xplane_user_fix_dat_filename = \
-            self.__create_path_and_filename('', '/Users/harraeusc/Documents/Projekte/Impfix/testdata/user_fix.dat')
+           self._create_path_and_filename(self.__xplane_path, 
+                                          self.__xplane_user_fix_dat_subdirectory)
         # Set path and filename of new user_fix.dat file
         self.new_user_fix_dat_filename = \
             self.xplane_user_fix_dat_filename + self.__cls_new_name_ext
 
-    def __create_path_and_filename(self, xplane_path: str, sub_path: str) -> str:
+    def _create_path_and_filename(self, xplane_path: str, sub_path: str) -> str:
         """Erzeugt aus xplane_path, xplane_userdat_path den neuen Dateinamen.
         Außerdem werden die Attribute self.__DirSeparator"""
         # Create filename of the new user_fix.dat file. Ensure the 
@@ -158,8 +156,7 @@ class SettingsClass:
             help='show verbose output',
             action='store_true')
         args = parser.parse_args()  
-        #self.OFM_file_name = args.ofmfile  @todo Kommentar entfernen und Folgezeile löschen
-        self.OFM_file_name = '/Users/harraeusc/Documents/Projekte/Impfix/testdata/ofmx_lo/isolated/ofmx_lo.ofmx'
+        self.OFM_file_name = args.ofmfile
         self.filter_by_rp_type = args.data
         self.filter_by_airport_icao_id = args.icao
         # if args.ofmurl != None:                   @todo Kommentar entfernen

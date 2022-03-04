@@ -3,4 +3,5 @@ doxygen
 *.pdf
 __pycache__
 ofmx_*.zip
-testdata
+testdata/ofmx_lo/embedded/**
+user_fix.dat.impfix

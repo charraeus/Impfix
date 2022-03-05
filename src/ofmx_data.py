@@ -91,27 +91,27 @@ class OFMXFileClass:
         * Extract the needed data and store in reporting point list.
         """
         # iterate over all Dpn knots
-        print('Reading ''Dpn'' knots')
+        print('Reading ''Dpn'' knots of OFM file')
         for dpn in self._tree_root.findall('Dpn'):     # --> list of elements
             rp_data: list = []
             # Find the reporting point type within the Dpn knot and 
             # filter by type if necessary
             # Available types: ['VFR-RP', 'VFR-MRP', 'VFR-HELI', 'VFR-GLDR', 'ICAO']
             # @todo implement filter
-            if not (dpn.find('codeType') is None) and \
+            if (dpn.find('codeType') is not None) and \
                (dpn.find('codeType').text in ['VFR-RP', 'VFR-MRP', 'VFR-HELI']):
                 rp_data.append(dpn.find('codeType').text)   # RP-type
-                if dpn.find('AhpUidAssoc/codeId') != None:
+                if dpn.find('AhpUidAssoc/codeId') is not None:
                     rp_data.insert(0, dpn.find('AhpUidAssoc/codeId').text)  # ICAO airport code
                 else:
                     rp_data.insert(0, 'n/a ')
-                if dpn.find('txtName') != None:    
+                if dpn.find('txtName') is not None:    
                     rp_data.append(dpn.find('txtName').text)   # RP-Name
                 else:
                     rp_data.append('n/a')
                 # Find the DpnUid element within the Dpn knot and read the data
                 dpn_uid = dpn.find('DpnUid')
-                if dpn_uid != None:
+                if dpn_uid is not None:
                     rp_data.insert(1, dpn_uid.find('codeId').text)    # RP-Id
                     # Coordinates (RP-longitude and RP-latitude): RP-coordinates
                     rp_data.append(self.convert_to_xplane_coord([dpn_uid.find('geoLat').text, 
@@ -150,10 +150,10 @@ class OFMXFileClass:
         
         arguments:
             ofmx:   [lat, long] decimal degree coordinates 
-                    of ofmx file
+                    of ofmx file in a list
         
         returns
-            [lat, long] coordinates for X-Plane 11
+            [lat, long] list with coordinates for X-Plane 11
         """
         xplane_coord = []
         # Latitude: if SOUTH then convert to negative value

@@ -18,7 +18,7 @@ class SettingsClass:
     * Command line parameters
     """
     ## Impfix version as string - has to be set manually by developer
-    impfix_version = '0.1.1'
+    impfix_version = '0.1.2'
     ## Impfix hello message part 1
     __cls_impfix_hello_1: str = 'Impfix '
     ## Impfix hello message part 2
@@ -36,12 +36,12 @@ class SettingsClass:
         self.verbose: bool = False
         ## Filename of Open Flight Map file inkluding path
         self.OFM_file_name = ''
+        ## URL of the Open Flight Maps file
+        self.OFM_file_url = ''
         ## Filter by reporting point type
         self.filter_by_rp_type = []
         ## Filter by airport's ICAO id
         self.filter_by_airport_icao_id = ''
-        ## URL of the Open Flight Maps file
-        self.OFM_file_url = ''
         ## Directory separation character
         self.dir_separator = ''
         ## Path and name of X-Plane directory
@@ -150,18 +150,15 @@ class SettingsClass:
                                 ##!< können, auf True setzen
         parser.add_argument('--icao', 
             help='filter by airport\'s ICAO code')
-        #parser.add_argument('--ofmurl', help='URL for download of Open Flight Maps data')
+        parser.add_argument('--ofmurl', help='URL for download of Open Flight Maps data')
         parser.add_argument('--xplanepath', help='path to X-Plane directory')
         parser.add_argument('-vv', '--verbose', 
             help='show verbose output',
             action='store_true')
         args = parser.parse_args()  
+        self.filter_by_rp_type = (args.data if args.data is not None else '')
+        self.filter_by_airport_icao_id = (args.icao if args.icao is not None else '')
         self.OFM_file_name = args.ofmfile
-        self.filter_by_rp_type = args.data
-        self.filter_by_airport_icao_id = args.icao
-        # if args.ofmurl != None:                   @todo Kommentar entfernen
-        #     self.OFM_file_url = args.ofmurl       @todo Kommentar entfernen
-        if args.xplanepath != None:
-            self.__xplane_path = args.xplanepath
-        if args.verbose != None:
-            self.verbose = args.verbose
+        self.OFM_file_url = (args.ofmurl if args.ofmurl is not None else '')
+        self.__xplane_path = (args.xplanepath if args.xplanepath is not None else '')
+        self.verbose = (args.verbose if args.verbose is not None else '')

@@ -26,7 +26,7 @@ class XPlaneNavDataClass:
 
     def __init__(self, impfix_settings: SettingsClass) -> None:
         ## Settings information
-        self.__settings_object: SettingsClass = impfix_settings
+        self.__settings_: SettingsClass = impfix_settings
         ## File object for existing user_fix.dat file
         self.__xplane_user_fix_dat_file = None
         ## File object for new user_fix.dat.impfix file
@@ -60,12 +60,12 @@ class XPlaneNavDataClass:
         # Create the new user_fix.dat file
         try:
             self.__new_user_fix_dat_file = \
-                open(self.__settings_object.new_user_fix_dat_filename, 'w')
+                open(self.__settings_.new_user_fix_dat_filename, 'w')
         except IOError as e:
             errno, strerror = e.args
             print('**I/O error({0}): {1}'.format(errno,strerror))
             print('**Error while creating the file \'{0}\''
-                .format(self.__settings_object.new_user_fix_dat_filename))
+                .format(self.__settings_.new_user_fix_dat_filename))
             exit()
         except:
             print('**Unknown error:\n', sys.exc_info()[0:2])
@@ -74,12 +74,12 @@ class XPlaneNavDataClass:
         # Open the existing user_fix.dat file
         try:
             self.__xplane_user_fix_dat_file = \
-                open(str(self.__settings_object.xplane_user_fix_dat_filename), 'r')
+                open(str(self.__settings_.xplane_user_fix_dat_filename), 'r')
         except IOError as e:
             errno, strerror = e.args
             print('**I/O error({0}): {1}'.format(errno,strerror))
             print('**File not found: {0}'
-                .format(self.__settings_object.xplane_user_fix_dat_filename))
+                .format(self.__settings_.xplane_user_fix_dat_filename))
             exit()
         except:
             print('**Unknown error:\n', sys.exc_info()[0:2])
@@ -111,7 +111,7 @@ class XPlaneNavDataClass:
                 # get and write OFMX data
                 reporting_point = ofmx_data.get_reporting_point()
                 try:
-                    if self.__settings_object.verbose:
+                    if self.__settings_.verbose:
                         print('\nWriting new OFM data\n', end='')
                     while True:
                         # write data to file
@@ -125,7 +125,7 @@ class XPlaneNavDataClass:
                         # region
                         line = line + '\t{}\n'.format(rp[0][0:2])
                         self.__new_user_fix_dat_file.write(line)
-                        if self.__settings_object.verbose:
+                        if self.__settings_.verbose:
                             print(line, end='')
                         # Get next ofmx data line
                         #ofmx_data_line = next(ofmx_data_generator)
@@ -145,7 +145,7 @@ class XPlaneNavDataClass:
             # and do not copy all the lines between the start and end mark lines
             if (not start_mark_found) or eof_mark_found:
                 self.__new_user_fix_dat_file.write(userfix_dat_line)
-            if self.__settings_object.verbose:
+            if self.__settings_.verbose:
                 print('.', end='')
 
         if not eof_mark_found:

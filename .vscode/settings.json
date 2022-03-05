@@ -1,5 +1,8 @@
 {
     "markdownlint.config": {
         "MD003": { "style": "consistent"}
+    },
+    "files.associations": {
+        "*.yaml": "home-assistant"
     }
 }

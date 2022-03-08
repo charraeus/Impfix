@@ -4,5 +4,5 @@ doxygen
 __pycache__
 *~
 ofmx_*.zip
-testdata/ofmx_lo/embedded/**
+testdata/ofmx_lo/embedded**
 user_fix.dat.impfix
